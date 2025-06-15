@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Generator</title>
+  <style>
+    body {
+      background: #2e2e2e;
+      color: white;
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+      padding-top: 100px;
+    }
+    .container {
+      background: #000;
+      padding: 30px;
+      border-radius: 10px;
+    }
+    input[type="text"] {
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Password - Generator</h3>
+    <input type="text" id="password" readonly>
+    <button onclick="copyPassword()">Copy</button><br><br>
+    <label>Length 
+      <input type="range" id="length" min="6" max="32" value="12">
+    </label>
+    <br>
+    <input type="checkbox" id="includeChars" checked> Characters
+    <input type="checkbox" id="includeNums" checked> Numbers
+    <br><br>
+    <button onclick="generatePassword()">Generate</button>
+  </div>
+
+  <script>
+    function generatePassword() {
+      let length = document.getElementById("length").value;
+      let useChars = document.getElementById("includeChars").checked;
+      let useNums = document.getElementById("includeNums").checked;
+
+      let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let nums = "0123456789";
+      let specials = "!@#$%^&*()_+~`|}{[]\\:;?><,./-=";
+      let charset = "";
+
+      if (useChars) charset += chars + specials;
+      if (useNums) charset += nums;
+
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        password += charset.charAt(Math.floor(Math.random() * charset.length));
+      }
+
+      document.getElementById("password").value = password;
+    }
+
+    function copyPassword() {
+      let password = document.getElementById("password");
+      password.select();
+      document.execCommand("copy");
+    }
+  </script>
+</body>
+</html>
